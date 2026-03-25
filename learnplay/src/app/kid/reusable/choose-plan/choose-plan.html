@@ -1,0 +1,77 @@
+<div
+  class="min-h-screen flex justify-center font-fredoka px-6 py-10 md:px-12 lg:px-[150px] !bg-gradient-to-b from-[#F5F5FF] to-[#FBF4FC]  animate-fade-in"
+>
+  <div class="max-w-xl w-full flex flex-col items-center">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1
+        class="font-bold text-[#9333EA] mb-2 text-3xl sm:text-4xl md:text-[55px] md:leading-[64px] tracking-[-0.4px] flex items-center justify-center gap-2"
+      >
+        Choose Your Plan
+        <!-- Decorative Credit Card Icon -->
+        <div class="hidden sm:block w-[60px] md:w-[114px] h-auto">
+          <img
+            src="assets/icons/credit-card.png"
+            alt="Credit Card Decor"
+            class="w-full h-full object-contain"
+          />
+        </div>
+      </h1>
+      <p
+        class="text-[#374151] font-normal text-lg sm:text-xl md:text-[26px] md:leading-[39px] tracking-[-0.4px] flex items-center justify-center px-2"
+      >
+        Select the plan that works best for you!
+      </p>
+    </div>
+
+    <!-- Plans List -->
+    <div class="w-full flex flex-col gap-4 mb-8">
+      <div
+        *ngFor="let plan of plans"
+        (click)="selectPlan(plan.id)"
+        matRipple
+        class="bg-white rounded-2xl p-4 sm:p-6 md:p-[30px] flex items-center justify-between cursor-pointer transition-all duration-200 border-2 shadow-sm hover:shadow-md select-none"
+        [ngClass]="{
+          'border-[#3466EB] !border-[4px] md:border-[5px] ring-1 ring-[#3466EB]': selectedPlanId === plan.id,
+          'border-transparent': selectedPlanId !== plan.id
+        }"
+      >
+        <!-- Left Side: Icon & Text -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <!-- Icon Container -->
+          <div
+            [class]="
+              'w-14 h-14 sm:w-[86px] sm:h-[85px] rounded-xl flex items-center justify-center text-white shadow-inner !flex-shrink-0 ' +
+              plan.iconBg
+            "
+          >
+            <img [src]="plan.icon" [alt]="plan.title" class="w-8 h-8 sm:w-[50px] sm:h-[50px] object-contain" />
+          </div>
+
+          <!-- Text -->
+          <div class="text-left">
+            <h3 class=" text-[#374151] font-bold text-lg sm:text-xl md:text-[30px] leading-tight tracking-[-0.4px]">{{ plan.title }}</h3>
+            <p class="font-normal text-xs sm:text-sm md:text-[18px] text-[#374151] leading-tight">{{ plan.subtitle }}</p>
+          </div>
+        </div>
+
+        <!-- Right Side: Price -->
+        <div class="text-right flex-shrink-0">
+          <div [class]="'text-xl sm:text-2xl md:text-[35px] font-bold ' + plan.textColor">
+            {{ plan.price }} {{ plan.currency }}
+          </div>
+          <p class="font-normal text-xs sm:text-sm md:text-[18px]">{{ plan.period }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Choose Plan Button -->
+    <!-- <button
+      (click)="confirmSelection()"
+      class="w-full cursor-pointer bg-[linear-gradient(90deg,_#C57CF0_0%,_#EA4C9F_100%)] text-white font-bold text-[25px] leading-[43px] tracking-[-0.4px] py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex items-center justify-center gap-2"
+    >
+      Choose Plan
+      <img src="assets/icons/rocket.png" alt="rocket" class="w-8 h-8 object-contain" />
+    </button> -->
+  </div>
+</div>

@@ -1,0 +1,34 @@
+/* Placeholder and selected text colors */
+select[formControlName="subject"]:invalid,
+select[formControlName="unit"]:invalid {
+  color: #BBC2CD !important;
+}
+
+select[formControlName="subject"]:valid,
+select[formControlName="unit"]:valid {
+  color: #374151 !important;
+}
+
+/* Option styling with multiple browser prefixes */
+select[formControlName="subject"] option:checked,
+select[formControlName="unit"] option:checked {
+  background-color: #9333EA !important;
+  color: white !important;
+}
+
+select[formControlName="subject"] option:hover,
+select[formControlName="unit"] option:hover,
+select[formControlName="subject"] option:focus,
+select[formControlName="unit"] option:focus {
+  background-color: #9333EA !important;
+  background: #9333EA !important;
+  color: white !important;
+}
+
+/* Webkit specific styling */
+select[formControlName="subject"] option:hover:not(:disabled),
+select[formControlName="unit"] option:hover:not(:disabled) {
+  background-color: #9333EA !important;
+  background: linear-gradient(#9333EA, #9333EA) !important;
+  color: white !important;
+}

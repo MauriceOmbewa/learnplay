@@ -1,0 +1,28 @@
+<nav class="flex justify-between items-center bg-gradient-to-r from-[#667DE8] to-[#754DA5] px-[12px] md:px-[12px] lg:px-[20px] py-[15px] md:py-[18px] lg:py-[20px] lg:pl-[150px] lg:pr-[150px] text-white shadow-lg">
+  <div class="flex items-center gap-2 md:gap-3 lg:gap-5">
+    <div class="bg-white bg-opacity-20 rounded-full w-[45px] h-[45px] md:w-[55px] md:h-[55px] lg:w-[63px] lg:h-[63px] flex items-center justify-center">
+      <img src="assets/icons/family.png" class="w-[22px] h-[22px] md:w-[27px] md:h-[27px] lg:w-[31px] lg:h-[31px]" alt="family">
+    </div>
+    <h2 class="text-lg md:text-2xl lg:text-3xl font-semibold font-fredoka">{{ isChildDetailsPage ? 'LearnPlay' : 'Parent Dashboard' }}</h2>
+  </div>
+  
+  <!-- Center Home Icon -->
+  <div class="flex items-center justify-center">
+    <button 
+      (click)="onHomeClick()"
+      class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full w-[45px] h-[45px] md:w-[55px] md:h-[55px] lg:w-[63px] lg:h-[63px] flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg"
+      title="Go to Parent Home"
+    >
+      <img src="assets/icons/home.png" class="w-[20px] h-[20px] md:w-[24px] md:h-[24px] lg:w-[28px] lg:h-[28px]" alt="home">
+    </button>
+  </div>
+  
+  <div class="flex items-center gap-2 md:gap-3 lg:gap-5">
+    <span class="hidden lg:flex items-center justify-center font-fredoka font-bold text-[25px] leading-[43px] tracking-[-0.4px] text-center">
+      Welcome, {{ userName }}!
+    </span>    
+    <div (click)="onUserProfileClick()" class="bg-custom-gradient rounded-full w-[45px] h-[45px] md:w-[55px] md:h-[55px] lg:w-[63px] lg:h-[63px] flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity duration-200">
+      <img src="assets/icons/male.png" class="w-[28px] h-[28px] md:w-[33px] md:h-[33px] lg:w-[39px] lg:h-[39px]" alt="male">
+    </div>
+  </div>
+</nav>

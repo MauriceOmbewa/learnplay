@@ -1,0 +1,197 @@
+<div class="w-full bg-gray-50 font-fredoka min-h-screen relative">
+  <app-notification></app-notification>
+
+  <!-- Header -->
+  <div class="mb-6 px-6 sm:px-10 md:px-16">
+    <a (click)="goBack()" class="inline-flex items-center text-[#9333EA] hover:text-purple-700 font-[Fredoka] font-bold gap-2 mb-8 transition-colors group cursor-pointer" style="font-size: 25px; line-height: 27px; letter-spacing: -0.4px; vertical-align: middle;">
+      <svg class="group-hover:-translate-x-1 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to subtopics
+    </a>
+    <div class="mb-14">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 class="font-fredoka font-bold text-[65px] leading-[64px] tracking-[-0.4px] text-[#374151] mb-4">Lessons</h1>
+          <p class="font-fredoka font-normal text-[22px] leading-[39px] tracking-[-0.4px] text-[#374151] mb-4 md:mb-0">
+            Manage lesson notes for this subtopic
+          </p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-2 md:gap-4">
+          <button (click)="toggleForm()"
+            class="w-[284px] h-[83px] text-white rounded-[20px] py-[20px] px-[55px] shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-[10px] opacity-100"
+            style="background: linear-gradient(90deg, #4ADE80 0%, #687AE4 100%); font-family: 'Fredoka'; font-weight: 600; font-size: 25px; line-height: 43px; letter-spacing: -0.4px; text-align: center; vertical-align: middle;"
+          >
+            <span class="text-lg" *ngIf="!isFormOpen">+</span>
+            <span class="text-lg" *ngIf="isFormOpen">×</span>
+            {{ isFormOpen ? 'Close Form' : 'Add Lesson' }}
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-4 pb-4 md:px-8 lg:px-12 max-w-6xl mx-auto">
+
+    <!-- ADD NEW LESSON FORM -->
+    <div *ngIf="isFormOpen" class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm mb-4">
+      <h2 class="font-semibold text-[20px] text-[#374151] mb-4">{{ editingLessonId ? 'Edit Lesson' : 'Add New Lesson' }}</h2>
+      <form (ngSubmit)="saveLesson()">
+
+        <div class="pb-[40px]">
+          <label class="block font-fredoka font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151] mb-2">Lesson Name *</label>
+          <input type="text" [(ngModel)]="lessonName" name="lessonName" placeholder="e.g. Basic Addition"
+            class="mt-[10px] w-full h-[79px] bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div class="pb-[40px]">
+          <label class="block font-fredoka font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151] mb-2">Video URL</label>
+          <input type="url" [(ngModel)]="videoUrl" name="videoUrl" placeholder="https://..."
+            class="mt-[10px] w-full h-[79px] bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div class="pb-[40px]">
+          <label class="block font-fredoka font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151] mb-2">Duration (minutes) *</label>
+          <input type="number" [(ngModel)]="duration" name="duration" placeholder="e.g. 8"
+            class="mt-[10px] w-full h-[79px] bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div class="pb-[40px] flex items-center gap-4">
+          <label class="block font-fredoka font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151]">Is Trailer?</label>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" [(ngModel)]="trailer" name="trailer" (change)="onTrailerChange($event)" class="w-6 h-6 rounded border-gray-300 text-purple-600 focus:ring-purple-500 cursor-pointer">
+            <span class="font-fredoka font-normal text-[20px] text-gray-500">{{ trailer ? 'Yes — this is a trailer lesson' : 'No' }}</span>
+          </div>
+        </div>
+
+        <!-- Notes Section — Note Type removed -->
+        <div class="bg-[#FEFCE8] rounded-xl p-6 border border-[#FEF08A] mb-6 shadow-[0_6px_30px_0_rgba(0,0,0,0.1)]">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-[72px] h-[71px] bg-[#FFF0BF] flex items-center justify-center rounded">
+              <img src="./assets/icons/image 27.png" alt="files" class="w-[42px] h-[42px]">
+            </div>
+            <h3 class="font-fredoka font-bold text-[35px] leading-[40px] tracking-[-0.4px] text-[#374151]">Lesson Notes</h3>
+          </div>
+          <p class="font-fredoka font-normal text-[22px] leading-[39px] tracking-[-0.4px] text-[#374151] mb-6">
+            Add helpful notes that students can read while watching the lesson.
+          </p>
+          <div>
+            <div *ngFor="let note of notes; let i=index"
+              class="bg-white relative mb-4 rounded-[23px] border border-[#E5E7EB] p-[30px] shadow-sm flex flex-col gap-[20px]">
+              <!-- Remove Button -->
+              <div class="flex justify-end">
+                <span (click)="removeNote(i)" class="text-[24px] font-semibold text-[#FC0A0A] cursor-pointer hover:opacity-70">✕</span>
+              </div>
+              <!-- Note Content only — no Note Type -->
+              <div>
+                <label class="block font-fredoka font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151] mb-2">Note Content</label>
+                <editor apiKey="nddf2mbsggxiatbt2z5ri0cexbh4dvlsoogt8kkpniki2t80"
+                  [(ngModel)]="note.content" [name]="'content_' + i" [init]="tinyMceConfig">
+                </editor>
+              </div>
+            </div>
+          </div>
+          <button type="button" (click)="addNote()"
+            class="mt-2 font-fredoka font-semibold text-[20px] text-[#9333EA] hover:underline cursor-pointer bg-transparent border-none">
+            + Add Another Note
+          </button>
+        </div>
+
+        <div class="flex gap-3 mt-6">
+          <button type="submit"
+            class="h-[70px] w-[200px] bg-[#29AA58] hover:bg-green-600 text-white font-fredoka font-semibold text-[25px] leading-[40px] tracking-[-0.4px] rounded-lg transition-colors shadow-sm flex items-center justify-center">
+            {{ editingLessonId ? 'Update Lesson' : 'Save Lesson' }}
+          </button>
+          <button type="button" (click)="cancel()"
+            class="h-[70px] w-[136px] bg-[#E9E9E9] hover:bg-gray-300 text-[#6B6B6B] font-fredoka font-semibold text-[25px] leading-[40px] tracking-[-0.4px] rounded-lg transition-colors flex items-center justify-center">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- EXISTING LESSONS LIST -->
+    <div class="mb-6" *ngIf="existingLessons.length > 0">
+      <h3 class="font-fredoka font-semibold text-[40px] leading-[40px] tracking-[-0.4px] text-left text-[#374151] mb-3">
+        Existing Lessons
+      </h3>
+      <div class="space-y-3">
+        <div *ngFor="let lesson of existingLessons"
+          (click)="openLesson(lesson)"
+          class="bg-white rounded-2xl border-2 border-green-300 p-4 shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+          <div class="mb-3 flex items-center justify-between">
+            <h4 class="font-fredoka font-semibold text-[25px] text-[#374151]">{{ lesson.name }}</h4>
+            <span *ngIf="lesson.trailer" class="bg-purple-100 text-purple-700 font-fredoka font-semibold text-[16px] px-3 py-1 rounded-full">Trailer</span>
+          </div>
+          <div class="flex items-center gap-4 mb-3 font-fredoka font-normal text-[22px] leading-[39px] tracking-[-0.4px] text-gray-500">
+            <span>⏱ {{ lesson.duration }}</span>
+            <span>📝 {{ lesson.notesCount }} notes attached</span>
+            <a *ngIf="lesson.videoUrl" [href]="lesson.videoUrl" target="_blank"
+              class="text-blue-600 hover:underline flex items-center gap-1" (click)="$event.stopPropagation()">
+              ▶ Watch Video
+            </a>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3" *ngIf="lesson.notes && lesson.notes.length > 0">
+            <span class="font-fredoka font-semibold text-[18px] text-gray-700">📝 Notes Preview</span>
+            <div class="space-y-1 mt-2">
+              <div *ngFor="let note of lesson.notes" class="flex items-start gap-2">
+                <span class="text-gray-400">•</span>
+                <div class="font-fredoka font-normal text-[16px] text-gray-600" [innerHTML]="note.text"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-3 mt-3">
+            <button (click)="editLesson(lesson); $event.stopPropagation()" class="bg-[#E0E7FF] hover:bg-indigo-100 text-[#4F46E5] font-[Fredoka] font-semibold text-[20px] leading-[40px] tracking-[-0.4px] align-middle text-center py-2 px-5 rounded-lg transition-colors">
+              Edit
+            </button>
+            <button (click)="deleteLesson(lesson); $event.stopPropagation()" class="bg-[#FEE2E2] hover:bg-red-100 text-[#EF4444] font-[Fredoka] font-semibold text-[20px] leading-[40px] tracking-[-0.4px] align-middle text-center py-2 px-5 rounded-lg transition-colors">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ✅ LESSON DETAIL PANEL — INSIDE root div so Angular renders it -->
+  <div *ngIf="selectedLesson && !showCompleteModal"
+    class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end md:items-center justify-center p-4">
+    <div class="bg-white rounded-[23px] w-full max-w-2xl shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+
+      <!-- Close -->
+      <button (click)="closeLesson()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-[28px] font-bold leading-none">×</button>
+
+      <!-- Lesson Info -->
+      <h2 class="font-fredoka font-bold text-[35px] text-[#374151] mb-2">{{ selectedLesson.name }}</h2>
+      <div class="flex items-center gap-4 text-gray-500 font-fredoka text-[20px] mb-4">
+        <span>⏱ {{ selectedLesson.duration }}</span>
+        <span>📝 {{ selectedLesson.notesCount }} notes</span>
+        <span *ngIf="selectedLesson.trailer" class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-[16px]">Trailer</span>
+      </div>
+
+      <a *ngIf="selectedLesson.videoUrl" [href]="selectedLesson.videoUrl" target="_blank"
+        class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 font-fredoka font-semibold text-[20px] px-5 py-3 rounded-xl hover:bg-blue-100 transition-colors mb-5 block">
+        ▶ Watch Video
+      </a>
+
+      <!-- Notes -->
+      <div *ngIf="selectedLesson.notes && selectedLesson.notes.length > 0"
+        class="bg-[#FEFCE8] rounded-xl p-4 mb-5 border border-[#FEF08A]">
+        <p class="font-fredoka font-semibold text-[20px] text-[#374151] mb-3">📝 Lesson Notes</p>
+        <div *ngFor="let note of selectedLesson.notes" class="flex items-start gap-2 mb-2">
+          <span class="text-gray-400">•</span>
+          <div class="font-fredoka font-normal text-[18px] text-gray-600" [innerHTML]="note.text"></div>
+        </div>
+      </div>
+
+     
+
+  
+
+    </div>
+  </div>
+
+</div>

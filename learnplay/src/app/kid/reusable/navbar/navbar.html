@@ -1,0 +1,58 @@
+<mat-toolbar
+  class="w-full flex justify-between items-center !bg-gradient-to-r !from-[#667DE8] !to-[#754DA5] !h-[80px] lg:!h-[103px] !min-h-[80px] lg:!min-h-[103px] !px-[20px] sm:!px-[40px] lg:!px-[150px] !py-[10px] lg:!py-[20px]"
+>
+  <!-- Left Logo + Title -->
+  <div class="flex items-center gap-2 sm:gap-[10px]">
+    <div
+      class="w-[45px] h-[45px] sm:w-[63px] sm:h-[63px] rounded-full bg-white flex items-center justify-center shadow-md"
+    >
+      <img
+        src="assets/icons/hat.png"
+        class="w-[24px] h-[22px] sm:w-[36px] sm:h-[32px]"
+        alt="logo"
+      />
+    </div>
+
+    <span
+      class="text-white font-fredoka font-bold text-[20px] sm:text-[30px] leading-tight tracking-[-0.4px]"
+    >
+      LearnPlay
+    </span>
+  </div>
+
+  <!-- Center Home Icon -->
+  <div class="flex items-center justify-center">
+    <button 
+      (click)="onHomeClick()"
+      class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full w-[45px] h-[45px] sm:w-[63px] sm:h-[63px] flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg"
+      title="Go to Learner Home"
+    >
+      <img src="assets/icons/home.png" class="w-[20px] h-[20px] sm:w-[28px] sm:h-[28px]" alt="home">
+    </button>
+  </div>
+
+  <!-- Right Points + Avatar -->
+  <div class="flex gap-3 sm:gap-[31px] items-center">
+    <!-- Points Badge -->
+    <div
+      class="hidden md:flex items-center gap-[10px] bg-[#8F75BD] backdrop-blur-md px-4 lg:px-[31px] py-[8px] rounded-[60px] h-[50px] lg:h-[59px]"
+    >
+      <img
+        src="assets/icons/star.png"
+        class="w-[24px] h-[24px] lg:w-[32px] lg:h-[32px]"
+        alt="star"
+      />
+      <span
+        class="text-white flex items-center justify-center font-fredoka font-bold text-[16px] lg:text-[25px] leading-none tracking-[-0.4px] whitespace-nowrap"
+        >{{ userPoints | number }} Points</span
+      >
+    </div>
+
+    <!-- Avatar Circle -->
+    <div
+      class="flex items-center justify-center rounded-full bg-gradient-to-r from-[#F8C96C] to-[#FCA780] w-[45px] h-[45px] sm:w-[63px] sm:h-[63px] overflow-hidden"
+    >
+      <img [src]="getAvatarPath(selectedLearner)" [alt]="(selectedLearner?.firstName||'Learner') + ' avatar'" class="w-[38px] h-[38px] sm:w-[54px] sm:h-[54px] object-contain" />
+    </div>
+  </div>
+</mat-toolbar>

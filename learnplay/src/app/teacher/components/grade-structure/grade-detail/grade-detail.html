@@ -1,0 +1,110 @@
+<div class="min-h-screen bg-[#F3F4F8] font-sans flex flex-col">
+  
+  
+  <!-- Main Content Area -->
+  <div class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full">
+    
+    <!-- Back Navigation -->
+    <div (click)="goBackToGradeStructure()" class="inline-flex items-center text-[#9333EA] hover:text-purple-700 font-[Fredoka] font-bold gap-2 mb-6 transition-colors group cursor-pointer" style="font-size: 25px; line-height: 27px; letter-spacing: -0.4px; vertical-align: middle;">
+      <svg class="group-hover:-translate-x-1 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to grades
+    </div>
+
+    <!-- Header & Action Button -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <div>
+        <h1 class="font-[Fredoka] font-bold text-[65px] leading-[64px] tracking-[-0.4px] text-[#374151] mb-2">{{ gradeName }} Subjects</h1>
+        <p class="font-[Fredoka] font-normal text-[30px] leading-[39px] tracking-[-0.4px] text-[#374151]">Assign and manage subjects for this grade</p>
+      </div>
+
+      <button 
+        (click)="toggleForm()"
+        class="text-white flex items-center gap-2 transform hover:-translate-y-0.5 select-none transition-all duration-200"
+        style="width: 314px; height: 83px; padding: 20px 55px; gap: 10px; border-radius: 20px; background: linear-gradient(90deg, #4ADE80 0%, #687AE4 100%); font-family: Fredoka; font-weight: 600; font-size: 25px; line-height: 43px; letter-spacing: -0.4px; text-align: center; vertical-align: middle;"
+      >
+        <span class="text-xl leading-none mb-0.5" *ngIf="!isFormVisible">+</span> 
+        <span class="text-xl leading-none mb-0.5" *ngIf="isFormVisible">✕</span>
+        {{ isFormVisible ? 'Close Form' : 'Assign Subject' }}
+      </button>
+    </div>
+
+    <!-- Assign Subject Form -->
+    <div *ngIf="isFormVisible" class="bg-white border-4 border-[#5B7FFF] rounded-2xl p-8 mb-10 shadow-sm animate-fade-in">
+      <h2 class="font-[Fredoka] font-semibold text-[40px] leading-[40px] tracking-[-0.4px] text-left text-slate-800 mb-6">Assign Subject to {{ gradeName }}</h2>
+      
+      <div class="mb-8">
+        <label class="block font-[Fredoka] font-semibold text-[25px] leading-[20px] tracking-[-0.4px] text-[#374151] mb-3">Subject Name *</label>
+        <div class="relative">
+          <select 
+            [(ngModel)]="selectedSubjectId" 
+            class="w-full p-4 pr-10 bg-white border font-[Fredoka] border-gray-200 rounded-xl text-slate-600 appearance-none focus:outline-none focus:border-[#5B7FFF] focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer"
+          >
+            <option value="" disabled selected>Choose a subject</option>
+            <option *ngFor="let subject of availableSubjects" [value]="subject.id">{{ subject.name }}</option>
+          </select>
+          <!-- Dropdown Chevron -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+            <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <button 
+          (click)="assignSubject()"
+          [disabled]="!selectedSubjectId"
+          [class.opacity-50]="!selectedSubjectId"
+          class="bg-[#A855F7] hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors"
+        >
+          Assign subject
+        </button>
+        <button 
+          (click)="toggleForm()" 
+          class="bg-gray-200 hover:bg-gray-300 text-[#374151] font-bold py-3 px-8 rounded-lg transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <div *ngFor="let subject of subjects" 
+           (click)="navigateToSubject(subject)"
+           class="bg-white rounded-[24px] p-8 shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+        
+        <!-- Icon Handling -->
+        <div class="mb-6 w-14 h-14 flex items-center justify-center">
+          <img *ngIf="subject.iconName" [src]="getSubjectIcon(subject.iconName)" [alt]="subject.name" class="w-12 h-12 object-contain" />
+        </div>
+
+        <!-- Content -->
+        <h3 class="font-[Fredoka] font-semibold text-[35px] leading-[40px] tracking-[-0.4px] text-left text-[#374151] mb-2">{{ subject.name }}</h3>
+        <p class="font-[Fredoka] font-normal text-[22px] leading-[39px] tracking-[-0.4px] text-left text-[#374151] mb-8">{{ subject.description }}</p>
+
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-3">
+          <span *ngFor="let stat of subject.stats" 
+            [ngClass]="{
+              'bg-blue-100 text-blue-600': stat.color === 'blue',
+              'bg-emerald-100 text-emerald-600': stat.color === 'green'
+            }"
+            class="px-4 py-2 rounded-full"
+            style="font-family: Fredoka; font-weight: 600; font-style: SemiBold; font-size: 20px; line-height: 40px; letter-spacing: -0.4px; vertical-align: middle;"
+          >
+            {{ stat.value }}
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

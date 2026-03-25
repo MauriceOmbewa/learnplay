@@ -1,0 +1,147 @@
+<div class="min-h-screen px-4 sm:px-8 md:px-12 lg:px-[150px]!bg-gradient-to-b from-[#F5F5FF] to-[#FBF4FC] pb-10">
+  <div class="py-6 md:py-[50px] flex flex-col gap-6 md:gap-[40px]">
+    <!-- Header: Back Link -->
+    <div>
+      <button mat-button (click)="goBack()" class="!px-0">
+        <h1
+          class="font-fredoka font-bold text-lg md:text-[25px] leading-tight tracking-[-0.4px] text-[#9333EA]"
+        >
+          ← Back to subjects
+        </h1>
+      </button>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <!-- Subject Summary Header -->
+      <div class="flex items-center gap-4 md:gap-[20px]">
+        <!-- Dynamic Background Color -->
+        <div
+          class="w-16 h-16 md:w-[104px] md:h-[103px] rounded-xl md:rounded-[16px] flex items-center justify-center shrink-0"
+          [style.background]="currentSubject.gradient"
+        >
+          <!-- Dynamic Icon -->
+          <img [src]="currentSubject.icon" class="w-10 h-10 md:w-[80px] md:h-[80px]" />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <!-- Dynamic Name and Text Color -->
+          <h1
+            class="font-fredoka font-bold text-2xl sm:text-3xl md:text-[50px] leading-tight tracking-[-0.4px]"
+            [style.color]="currentSubject.textColor"
+          >
+            {{ currentSubject.name }}
+          </h1>
+          <!-- Dynamic Description -->
+          <p
+            class="font-fredoka font-normal text-sm sm:text-base md:text-[20px] text-gray-600"
+          >
+            {{ currentSubject.description }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Points Badge -->
+      <div
+        class="bg-[#8F75BD] text-white px-4 md:px-[31px] py-2 md:py-[8px] rounded-full flex items-center gap-2 shrink-0 md:self-auto"
+      >
+        <img src="assets/icons/star.png" class="w-6 h-6 md:w-[32px] md:h-[32px]" alt="star" />
+        <span class="font-fredoka font-bold text-lg md:text-[25px] text-white"
+          >450 Points</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Units List -->
+  <div class="flex flex-col gap-4">
+    @for (unit of units; track unit.id; let i = $index) {
+
+    <!-- Unit Card -->
+    <!-- We use ngClass to conditionally add the green border for completed items -->
+    <mat-card
+      class="!rounded-3xl !cursor-pointer !p-4 md:!p-6 !shadow-[0px_6px_30px_0px_#0000001A] hover:!shadow-md transition-all duration-200 !border-4 !border-solid !bg-white"
+      [style.borderColor]="unit.status === 'completed' ? '#16A34A' : 'transparent'"
+      [class.opacity-60]="unit.status === 'locked'"
+      [class.pointer-events-none]="unit.status === 'locked'"
+      [class.bg-gray-50]="unit.status === 'locked'"
+      (click)="onSelectUnit(unit, i)"
+    >
+      <mat-card-content class="!p-0">
+        <div class="flex flex-col sm:flex-row gap-4 relative">
+          <div
+            class="w-14 h-14 md:w-20 md:h-20 rounded-xl flex items-center justify-center shrink-0 bg-[linear-gradient(134.45deg,#67ECA3_15.3%,#43D785_81.76%)]"
+          >
+            @if (unit.status === 'locked') {
+            <img src="assets/icons/lock.png" class="w-10 h-10 md:w-[60px] md:h-[60px]" />
+            } @else {
+            <img src="assets/icons/maths.png" class="w-10 h-10 md:w-[60px] md:h-[60px]" />
+            }
+          </div>
+
+          <!-- Main Content -->
+          <div class="flex-1">
+            <h2 class="font-[fredoka] font-semibold text-xl sm:text-2xl md:text-[35px] leading-tight mb-1">{{ unit.title }}</h2>
+            <p
+              class="font-fredoka font-normal text-sm sm:text-base md:text-[22px] leading-relaxed mb-3 text-[#374151]"
+              [ngClass]="unit.status === 'locked' ? 'text-gray-400' : 'text-gray-500'"
+            >
+              {{ unit.description }}
+            </p>
+
+            <!-- Progress Section (In Progress Only) -->
+            @if (unit.status === 'in-progress') {
+            <div class="mb-4">
+              <div class="flex font-[fredoka] justify-between text-xs md:text-[18px] text-[#374151] mb-1">
+                <span>Progress</span>
+                <span class="font-semibold">{{ unit.subtopicsCompleted }} of {{ unit.subtopicsTotal }} subtopics</span>
+              </div>
+
+              <!-- Material Progress Bar with 'orange-progress' class for color override -->
+              <app-progress-bar
+                class="mt-2 h-2 md:h-3"
+                [value]="calculateProgress(unit.subtopicsCompleted, unit.subtopicsTotal)"
+                [barColor]="'linear-gradient(to right, #fbbf24, #f97316)'"
+              ></app-progress-bar>
+              <!-- <mat-progress-bar
+                mode="determinate"
+                [value]="calculateProgress(unit.subtopicsCompleted, unit.subtopicsTotal)"
+                class="orange-progress orange-progress !h-3 !rounded-full overflow-hidden"
+              >
+              </mat-progress-bar> -->
+            </div>
+            }
+
+            <!-- Footer Status Row -->
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+              @if (unit.status === 'completed') {
+              <span class="font-[fredoka] font-semibold text-sm md:text-[20px] text-[#16A34A]"> ✓ Completed </span>
+              } @else if (unit.status === 'in-progress') {
+              <span class="font-[fredoka] font-semibold text-sm md:text-[20px] text-[#CA8A04]">In Progress</span>
+              } @else if (unit.status === 'locked') {
+              <span class="font-[fredoka] font-semibold text-sm md:text-[20px] text-[#fd0800] flex items-center ">
+                <mat-icon class="!w-5 !h-5 !text-base">lock</mat-icon> Locked</span
+              >
+              }
+
+              <span class="font-[fredoka] text-[#374151] text-xs md:text-[18px]">{{ unit.subtopicsTotal }} Subtopics</span>
+
+              @if (unit.pointsEarned && unit.status !== 'locked') {
+              <span class="font-[fredoka] font-semibold text-sm md:text-[20px] text-[#CA8A04]">
+                ⭐{{ unit.pointsEarned }} points earned
+              </span>
+              }
+            </div>
+          </div>
+
+          <!-- Decorative Right Icon -->
+          @if (unit.status !== 'locked' && unit.decorationIcon) {
+          <div class="self-start">
+            <img [src]="unit.decorationIcon" class="w-[22px] h-[22px] md:w-[64px] md:h-[64px]" alt="decoration" />
+          </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+    }
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="min-h-screen pt-[20px] md:pt-[40px] lg:pt-[65px] pb-[20px] md:pb-[40px] lg:pb-[65px] bg-gradient-to-b from-[#F5F5FF] to-[#FBF4FC] w-full flex justify-center px-4 md:px-0">
+    <div class="w-full max-w-[520px] flex flex-col gap-[20px] md:gap-[30px] lg:gap-[35px]">
+        <span (click)="navigateToLandingPage()" class="font-fredoka font-bold text-[18px] md:text-[22px] lg:text-[25px] leading-[20px] md:leading-[24px] lg:leading-[27px] tracking-[-0.4px] text-[#9333EA] cursor-pointer">
+            ← Back
+        </span>
+        <div class="w-full p-[20px] md:p-[30px] lg:pt-[50px] lg:pr-[40px] lg:pb-[50px] lg:pl-[40px] flex flex-col gap-[20px] md:gap-[25px] lg:gap-[30px] rounded-[15px] md:rounded-[20px] lg:rounded-[23px] bg-white shadow-[0px_6px_30px_0px_#0000001A]">
+            <div class="w-full flex items-center flex-col gap-[8px] md:gap-[10px]">
+                <div class="w-[80px] h-[80px] md:w-[90px] md:h-[90px] lg:w-[100px] lg:h-[100px] rounded-full bg-gradient-to-b from-[#FAB315] to-[#F98816] shadow-[0px_10px_25px_0px_#00000026] flex items-center justify-center">
+                    <img src="./assets/icons/graduand.png" class="w-[40px] h-[36px] md:w-[48px] md:h-[42px] lg:w-[54px] lg:h-[48px]">
+                </div>
+                <div class="w-full flex flex-col gap-[2px] text-center">
+                    <span class="font-fredoka font-bold text-[32px] md:text-[38px] lg:text-[45px] leading-[36px] md:leading-[50px] lg:leading-[64px] tracking-[-0.4px] text-[#9333EA]">
+                        Sign in!
+                    </span>
+                    <div class="flex items-center justify-center gap-[5px] flex-wrap">
+                        <span class="font-fredoka font-normal text-[16px] md:text-[18px] lg:text-[20px] leading-[20px] md:leading-[32px] lg:leading-[39px] tracking-[-0.4px] text-[#374151]">
+                            Welcome back. Sign in to continue
+                        </span>
+                        <img src="./assets/icons/smile.png" alt="smile" class="w-[16px] h-[16px] md:w-[18px] md:h-[18px] lg:w-[20px] lg:h-[20px]">
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex flex-col gap-[20px] md:gap-[25px] lg:gap-[30px]">
+                <div *ngIf="errorMessage" class="w-full px-[16px] py-[12px] bg-red-50 border-[2px] border-red-300 rounded-[12px]">
+                    <span class="font-fredoka font-medium text-[16px] md:text-[18px] leading-[20px] text-red-600">
+                        {{ errorMessage }}
+                    </span>
+                </div>
+                <div class="w-full flex flex-col gap-[20px] md:gap-[25px] lg:gap-[30px]">
+                    <div class="w-full flex flex-col gap-[10px] md:gap-[12px] lg:gap-[15px]">
+                        <label class="font-fredoka text-[#374151] font-semibold text-[18px] md:text-[22px] lg:text-[25px] leading-[20px] tracking-[-0.4px]">
+                          Email
+                        </label>
+                        <input 
+                          type="email" 
+                          [(ngModel)]="email"
+                          placeholder="your@email.com" 
+                          class="w-full h-[60px] md:h-[70px] lg:h-[79px] px-[16px] md:px-[18px] lg:px-[20px] py-[18px] md:py-[22px] lg:py-[25px] bg-white border-[2px] border-[#E5E7EB] rounded-[15px] md:rounded-[18px] lg:rounded-[20px] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-fredoka font-medium text-[18px] md:text-[20px] lg:text-[23px] leading-[22px] md:leading-[26px] lg:leading-[29px] tracking-[-0.4px] text-[#374151] placeholder:text-[#BBC2CD]"
+                        />
+                    </div>
+                    <div class="w-full flex flex-col gap-[10px] md:gap-[12px] lg:gap-[15px]">
+                        <label class="font-fredoka text-[#374151] font-semibold text-[18px] md:text-[22px] lg:text-[25px] leading-[20px] tracking-[-0.4px]">
+                          Password
+                        </label>
+                        <input 
+                          type="password" 
+                          [(ngModel)]="password"
+                          placeholder="Enter password" 
+                          class="w-full h-[60px] md:h-[70px] lg:h-[79px] px-[16px] md:px-[18px] lg:px-[20px] py-[18px] md:py-[22px] lg:py-[25px] bg-white border-[2px] border-[#E5E7EB] rounded-[15px] md:rounded-[18px] lg:rounded-[20px] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-fredoka font-medium text-[18px] md:text-[20px] lg:text-[23px] leading-[22px] md:leading-[26px] lg:leading-[29px] tracking-[-0.4px] text-[#374151] placeholder:text-[#BBC2CD]"
+                        />
+                    </div>                                                         
+                </div>
+                <button class="w-full h-[60px] md:h-[70px] lg:h-[83px] px-[20px] md:px-[40px] lg:px-[55px] py-[16px] md:py-[18px] lg:py-[20px] rounded-[15px] md:rounded-[18px] lg:rounded-[20px] bg-gradient-to-r from-[#687AE4] to-[#7452AC] flex items-center justify-center cursor-pointer" (click)="onSignIn()">
+                    <span class="font-fredoka font-bold text-[18px] md:text-[22px] lg:text-[25px] leading-[22px] md:leading-[36px] lg:leading-[43px] tracking-[-0.4px] text-[#FFFFFF]">
+                        Let's Learning!
+                    </span>
+                    <img src="./assets/icons/start.png" alt="start" class="w-[28px] h-[28px] md:w-[34px] md:h-[34px] lg:w-[40px] lg:h-[40px] ml-2">
+                </button>
+            </div>
+            <div class="w-full flex items-center gap-[10px]">
+                <div class="flex-1 h-[1px] border-[2px] border-[#BBC2CD80]"></div>
+                <span class="font-fredoka font-medium text-[18px] md:text-[20px] lg:text-[23px] leading-[22px] md:leading-[26px] lg:leading-[29px] tracking-[-0.4px] text-[#BBC2CD]">
+                    Or
+                </span>
+                <div class="flex-1 h-[1px] border-[2px] border-[#BBC2CD80]"></div>
+            </div>
+            <div class="w-full h-[50px] md:h-[58px] lg:h-[67px] px-[20px] md:px-[40px] lg:px-[55px] py-[12px] md:py-[16px] lg:py-[20px] rounded-[15px] md:rounded-[18px] lg:rounded-[20px] bg-white border-[1px] border-[#E5E7EB] flex items-center justify-center cursor-pointer" (click)="onGoogleSignIn()">
+                <img src="./assets/icons/google.png" alt="google" class="w-[24px] h-[24px] md:w-[28px] md:h-[28px] lg:w-[32px] lg:h-[32px]">
+                <span class="font-fredoka font-bold text-[18px] md:text-[22px] lg:text-[25px] leading-[22px] md:leading-[36px] lg:leading-[43px] tracking-[-0.4px] text-[#374151] ml-2">
+                    Sign in with Google
+                </span>
+            </div>
+            <div class="flex justify-center flex-wrap gap-1">
+                <span class="font-fredoka font-normal text-[16px] md:text-[18px] lg:text-[20px] leading-[20px] md:leading-[32px] lg:leading-[39px] tracking-[-0.4px] text-[#374151]">
+                    Don't have an account? 
+                </span>
+                <span class="font-fredoka font-semibold text-[16px] md:text-[18px] lg:text-[20px] leading-[20px] md:leading-[32px] lg:leading-[39px] tracking-[-0.4px] text-[#9333EA] cursor-pointer" (click)="navigateToSignUp()">
+                    Sign up
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-[#F3F4F8] font-sans flex flex-col">
+  <div class="flex-1 p-6 md:p-10 max-w-7xl mx-auto w-full">
+
+    <!-- Back Navigation -->
+    <div (click)="goBack()" class="inline-flex items-center font-[Fredoka] font-bold text-base sm:text-lg text-[#9333EA] gap-1 mb-2 hover:text-purple-700 cursor-pointer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to content overview
+    </div>
+
+
+    <!-- Header + Button -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <h1 class="font-[Fredoka] font-bold text-[65px] leading-[64px] tracking-[-0.4px] text-[#374151]">Subscription Plan</h1>
+        <p class="font-[Fredoka] font-normal text-[30px] leading-[39px] tracking-[-0.4px] text-[#374151]">Manage your subscription plans</p>
+      </div>
+      <button
+        (click)="showForm = !showForm"
+        class="w-[284px] h-[83px] text-white rounded-[20px] py-[20px] px-[55px] shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-[10px] opacity-100"
+        style="background: linear-gradient(90deg, #4ADE80 0%, #687AE4 100%); font-family: 'Fredoka'; font-weight: 600; font-size: 25px; line-height: 43px; letter-spacing: -0.4px; text-align: center; vertical-align: middle;"
+      >
+        <span class="text-lg" *ngIf="!showForm">+</span>
+        <span class="text-lg" *ngIf="showForm">×</span>
+        {{ showForm ? 'Close Form' : 'Add Subscription' }}
+      </button>
+    </div>
+
+    <!-- Add Subscription Form --> 
+    <div *ngIf="showForm" class="bg-white shadow-sm px-4 sm:px-[30px] py-6 sm:py-[51px] mb-6 rounded-[23px] border-[5px] border-[#4C9AFC] space-y-6">
+      <h2 class="font-[Fredoka] font-semibold text-[40px] leading-[40px] tracking-[-0.4px] text-left text-[#374151]">New Subscription</h2>
+
+      <div class="flex flex-col gap-4">
+
+        <div class="flex flex-col gap-1">
+          <label class="font-[Fredoka] text-[18px] text-[#374151]">Name</label>
+          <input
+            [(ngModel)]="form.name"
+            type="text"
+            placeholder="Plan name"
+            class="border border-slate-200 rounded-[12px] px-4 py-3 font-[Fredoka] text-[18px] text-[#374151] outline-none focus:border-[#A855F7]"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-[Fredoka] text-[18px] text-[#374151]">Description</label>
+          <input
+            [(ngModel)]="form.description"
+            type="text"
+            placeholder="Plan description"
+            class="border border-slate-200 rounded-[12px] px-4 py-3 font-[Fredoka] text-[18px] text-[#374151] outline-none focus:border-[#A855F7]"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-[Fredoka] text-[18px] text-[#374151]">Amount</label>
+          <input
+            [(ngModel)]="form.amount"
+            type="number"
+            placeholder="0"
+            class="border border-slate-200 rounded-[12px] px-4 py-3 font-[Fredoka] text-[18px] text-[#374151] outline-none focus:border-[#A855F7]"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-[Fredoka] text-[18px] text-[#374151]">Billing Type</label>
+          <select
+            [(ngModel)]="form.billingType"
+            class="border border-slate-200 rounded-[12px] px-4 py-3 font-[Fredoka] text-[18px] text-[#374151] outline-none focus:border-[#A855F7] bg-white"
+          >
+            <option value="" disabled>Select billing type</option>
+            <option value="DAILY">Daily</option>
+            <option value="WEEKLY">Weekly</option>
+            <option value="MONTHLY">Monthly</option>
+          </select>
+        </div>
+
+        <div class="flex gap-3 mt-2">
+          <button
+            (click)="submitForm()"
+            class="flex-1 py-3 rounded-[16px] font-[Fredoka] font-semibold text-[20px] text-white transition-colors cursor-pointer"
+            style="background: linear-gradient(90deg, #4ADE80 0%, #687AE4 100%);"
+          >
+            Submit
+          </button>
+          <button
+            (click)="cancelForm()"
+            class="flex-1 py-3 rounded-[16px] font-[Fredoka] font-semibold text-[20px] bg-gray-100 text-[#374151] hover:bg-gray-200 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

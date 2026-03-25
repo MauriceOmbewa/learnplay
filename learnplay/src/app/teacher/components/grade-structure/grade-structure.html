@@ -1,0 +1,50 @@
+<div class="min-h-screen p-8 font-sans bg-[#F9FAFC] text-slate-800">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- Back Navigation -->
+    <div (click)="goBackToDashboard()" class="inline-flex items-center text-[#9333EA] hover:text-purple-700 font-[Fredoka] font-bold mb-6 transition-colors group cursor-pointer" style="font-size: 25px; line-height: 27px; letter-spacing: -0.4px; vertical-align: middle;">
+      <svg class="group-hover:-translate-x-1 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back to content overview
+    </div>
+
+    <!-- Header Section -->
+    <div class="mb-12">
+      <h1 class="font-[Fredoka] font-bold text-[65px] leading-[64px] tracking-[-0.4px] text-[#374151] mb-4">Grade Structure</h1>
+      <p class="font-[Fredoka] font-normal text-[30px] leading-[39px] tracking-[-0.4px] text-slate-800">Select a grade to build its curriculum structure</p>
+    </div>
+
+    <!-- Grades Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card Loop -->
+      <div 
+        *ngFor="let grade of grades" 
+        (click)="navigateToGrade(grade)"
+        class="bg-white rounded-[20px] p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+      >
+        <!-- Icon (Graduation Cap) -->
+        <div class="mb-6 transform group-hover:scale-110 transition-transform duration-300 origin-left">
+          <img src="assets/icons/graduand.png" alt="Graduation Cap" class="filter drop-shadow-sm rotate-360 opacity-100" style="width: 77px; height: 68px;" />
+        </div>
+
+        <!-- Content -->
+        <h2 class="font-[Fredoka] font-semibold text-[35px] leading-[40px] tracking-[-0.4px] text-left text-[#374151] mb-2">{{ grade.name }}</h2>
+        <p class="font-[Fredoka] font-normal text-[22px] leading-[39px] tracking-[-0.4px] text-left text-slate-500 font-medium mb-8">{{ grade.description }}</p>
+
+        <!-- Badges -->
+        <div class="flex items-center gap-3">
+          <div class="px-4 py-2 rounded-full bg-[#E0E7FF] text-[#4338CA]" style="font-family: 'Fredoka'; font-weight: 600; font-size: 20px; line-height: 40px; letter-spacing: -0.4px; vertical-align: middle;">
+            {{ grade.subjectsCount }} subjects
+          </div>
+          <div class="px-4 py-2 rounded-full bg-[#D1FAE5] text-[#059669]" style="font-family: 'Fredoka'; font-weight: 600; font-size: 20px; line-height: 40px; letter-spacing: -0.4px; vertical-align: middle;">
+            {{ grade.topicsCount }} topics
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

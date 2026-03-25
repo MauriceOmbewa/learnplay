@@ -1,0 +1,39 @@
+<div class="w-full text-white shadow-md"
+     style="height: 103px; padding: 20px 15px; background: linear-gradient(90deg, #667DE8 0%, #754DA5 100%); opacity: 1;">
+  <div class="flex justify-between items-center h-full">
+
+    <!-- Left: Icon + Title -->
+    <div class="flex items-center gap-3 cursor-pointer" (click)="goToCourses()">
+      <img src="assets/icons/teacher.png" alt="Teacher Icon"
+           class="w-10 h-10 rounded-full border-2 border-white" />
+      <h1 class="font-[Fredoka] font-bold text-[30px] leading-[25px] tracking-[-0.4px]">Admin's Portal</h1>
+    </div>
+
+    <!-- Center: Home Icon -->
+    <div class="flex items-center justify-center">
+      <button 
+        (click)="onHomeClick()"
+        class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full w-[55px] h-[55px] lg:w-[63px] lg:h-[63px] flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        title="Go to Admin Home"
+      >
+        <img src="assets/icons/home.png" class="w-[24px] h-[24px] lg:w-[28px] lg:h-[28px]" alt="home">
+      </button>
+    </div>
+
+    <!-- Right: Logout + Avatar -->
+    <div class="flex items-center gap-4">
+      <button
+        (click)="onLogout()"
+        class="bg-red-500 hover:bg-red-600 cursor-pointer px-5 py-3 rounded-lg flex items-center justify-center gap-1 transition-colors duration-200"
+      >
+        <mat-icon class="text-white text-[18px]" style="font-size: 18px; width: 18px; height: 18px;">logout</mat-icon>
+        <span class="font-fredoka font-bold text-[16px] text-white whitespace-nowrap">
+          Logout
+        </span>
+      </button>
+      <img src="assets/icons/kenan.png" alt="Kenan Avatar"
+           class="w-20 h-16 rounded-full" />
+    </div>
+
+  </div>
+</div>

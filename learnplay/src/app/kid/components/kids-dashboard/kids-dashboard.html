@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-content font-fredoka">
+  
+  @if (currentStep === 'plan-selection') {
+    <!-- Step 1: Choose Plan -->
+    <!-- Important: Update your ChoosePlan component to emit the event on button click -->
+    <app-choose-plan (planSelected)="onPlanSelected($event)"></app-choose-plan>
+  } 
+  
+  @else if (currentStep === 'payment' && selectedPlan) {
+    <!-- Step 2: Payment Method -->
+    <app-payment-method 
+      [plan]="selectedPlan" 
+      (paymentComplete)="onPaymentSuccess()"
+      (backToPlans)="returnToPlans()">
+    </app-payment-method>
+  } 
+  
+  @else {
+    <!-- Step 3: Actual Dashboard -->
+    <router-outlet></router-outlet>
+  }
+
+</div>

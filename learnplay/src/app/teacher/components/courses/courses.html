@@ -1,0 +1,93 @@
+<div class="bg-white p-2 sm:p-4 mt-4 mx-4 rounded-[23px] shadow-[0px_6px_30px_0px_rgba(0,0,0,0.1)] lg:mx-auto lg:w-[1300px]">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="font-[Fredoka] font-semibold text-[45px] leading-[40px] tracking-[-0.4px] align-middle text-[#374151]">
+      Courses Overview
+    </h2>
+    <button 
+      mat-raised-button 
+      (click)="toggleForm()"
+      class="text-white font-bold rounded-[20px] shadow-lg hover:shadow-xl transition-all flex center justify-center gap-[3px] opacity-100" 
+      style="font-family: 'Fredoka'; background: linear-gradient(90deg, #4ADE80 0%, #687AE4 100%); width: 220px; height: 70px; padding: 15px 40px; font-size: 24px; text-align: center; vertical-align: middle;">
+      <span style="font-size: 28px; font-weight: normal; color: #FFFFFF;">+</span> 
+      <span style="color: #FFFFFF;">Create Course</span>
+    </button>
+  </div>
+
+  <!-- Create Course Form -->
+     <div *ngIf="showForm" class="mb-4 bg-gray-50 p-6 rounded-lg border">
+    <h3 class="font-[Fredoka] font-semibold text-[28px] mb-4 text-[#374151]">Create New Course</h3>
+    <form (ngSubmit)="createCourse()" #courseForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-[Fredoka] font-medium text-[20px] text-[#374151] mb-2">Course Title</label>
+          <input type="text" [(ngModel)]="newCourse.title" name="title" required
+                 class="mt-[10px] w-full h-[79px] bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                 placeholder="Enter course title">
+        </div>
+        <div>
+          <label class="block font-[Fredoka] font-medium text-[20px] text-[#374151] mb-2">Country Code</label>
+          <select [(ngModel)]="newCourse.countryCode" name="countryCode" required
+                  class="mt-[10px] w-full h-[79px] bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled>Select a country</option>
+            <option *ngFor="let country of countries" [value]="country.code">
+              {{ country.name }} ({{ country.code }})
+            </option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block font-[Fredoka] font-medium text-[20px] text-[#374151] mb-2">Description</label>
+          <textarea [(ngModel)]="newCourse.description" name="description" required
+                    class="mt-[10px] w-full bg-white border-gray-200 border-[2px] rounded-[20px] px-[20px] py-[25px] font-fredoka font-normal text-[23px] leading-[29px] tracking-[-0.4px] text-[#374151] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y" 
+                    rows="3" placeholder="Enter course description"></textarea>
+        </div>
+        <div class="flex items-center">
+          <input type="checkbox" [(ngModel)]="newCourse.premium" name="premium" id="premium"
+                 class="mr-2">
+          <label for="premium" class="font-[Fredoka] font-medium text-[20px] text-[#374151]">Premium Course</label>
+        </div>
+        <div class="flex items-center">
+          <input type="checkbox" [(ngModel)]="newCourse.active" name="active" id="active"
+                 class="mr-2">
+          <label for="active" class="font-[Fredoka] font-medium text-[20px] text-[#374151]">Active</label>
+        </div>
+      </div>
+      <div class="flex gap-4 mt-6">
+        <button type="submit" [disabled]="!courseForm.form.valid"
+                class="bg-green-600 hover:bg-green-700 text-white font-[Fredoka] font-semibold px-6 py-2 rounded-lg">
+          Create Course
+        </button>
+        <button type="button" (click)="toggleForm()"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-[Fredoka] font-semibold px-6 py-2 rounded-lg">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="font-[Fredoka] font-semibold text-[24px] leading-[36px] tracking-[-0.4px] text-[#374151] border-b border-gray-200">
+          <th class="px-3 py-2 text-left w-1/3">Course Name</th>
+          <th class="px-3 py-2 text-left w-1/3">Description</th>
+          <th class="px-3 py-2 text-left w-1/3">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm text-gray-700">
+        <tr *ngFor="let course of courses" class="border-b border-gray-100">
+          <td class="px-3 py-3">
+            <div class="flex items-center gap-2">
+              <span class="font-[Fredoka] font-semibold text-[20px] leading-[36px] tracking-[-0.4px]">{{ course.title }}</span>
+            </div>
+          </td>
+          <td class="px-3 py-3 font-[Fredoka] text-[18px] text-[#6B7280]">{{ course.description }}</td>
+          <td class="px-3 py-3 space-x-2">
+            <button (click)="viewCourse(course.id)" class="text-blue-600 hover:underline font-[Fredoka] font-semibold text-[18px] cursor-pointer">View</button>
+            <button class="text-green-600 hover:underline font-[Fredoka] font-semibold text-[18px]">Edit</button>
+            <button class="text-red-600 hover:underline font-[Fredoka] font-semibold text-[18px]">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

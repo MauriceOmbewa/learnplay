@@ -1,0 +1,132 @@
+<main
+  class="min-h-screen px-4 sm:px-8 md:px-12 lg:px-[150px] !bg-gradient-to-b from-[#F5F5FF] to-[#FBF4FC] pb-10"
+>
+  <div class="py-6 md:py-[50px] flex flex-col gap-6 md:gap-[40px]">
+    <!-- Back to units -->
+    <div class="flex flex-col gap-2">
+      <button mat-button (click)="goBack()" class="!px-0 self-start">
+        <h1
+          class="font-fredoka font-bold text-lg md:text-[25px] leading-tight tracking-[-0.4px] text-[#9333EA]"
+        >
+          ← Back to units
+        </h1>
+      </button>
+
+      <!-- Breadcrumb -->
+      <p
+        class="font-fredoka font-normal text-sm md:text-[22px] text-[#374151]"
+      >
+        Math → Unit 2: {{ currentUnit.title }}
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <!-- Title Row -->
+      <div class="flex-1">
+        <h1
+          class="font-fredoka text-[#9333EA] font-bold text-3xl md:text-4xl lg:text-[50px] leading-tight tracking-[-0.4px]"
+        >
+          {{ currentUnit.title }}
+        </h1>
+        <p
+          class="font-fredoka font-normal text-[#374151] text-base md:text-[20px] leading-normal"
+        >
+          {{ currentUnit.subtitle }}
+        </p>
+      </div>
+
+      <!-- Points Badge -->
+      <div
+        class="bg-[#8F75BD] text-white px-4 md:px-[31px] py-2 md:py-[8px] rounded-full flex items-center gap-2 shrink-0 sm:self-auto"
+      >
+        <img src="assets/icons/star.png" class="w-6 h-6 md:w-[32px] md:h-[32px]" alt="star" />
+        <span class="font-fredoka font-bold text-lg md:text-[25px] text-white"
+          >450 Points</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Lessons List -->
+   <!-- "'mr-4 sm:mr-10 md:mr-12 lg:mr-[160px]': !isQuiz(lesson)," -->
+  <div class="flex flex-col gap-4">
+    <mat-card
+      *ngFor="let lesson of currentUnit.lessons"
+      (click)="onSelectLesson(lesson)"
+      class="!p-4 md:!p-[30px] !rounded-[20px] !shadow-[0_6px_30px_0_rgba(0,0,0,0.1)] hover:!shadow-md transition-all duration-200 !flex !flex-row !justify-between !items-center cursor-pointer !border-solid"
+      [ngClass]="{
+        '!border-[3px]': selectedLesson === lesson,
+        '!border-l-[10px] md:!border-l-[14px]': selectedLesson !== lesson,
+        
+        '!mr-0': isQuiz(lesson),
+        '!bg-[#F1E2FB]': isQuiz(lesson),
+        '!bg-white': !isQuiz(lesson),
+        'opacity-60 pointer-events-none': lesson.status === 'Locked' && !isQuiz(lesson),
+        'pointer-events-none': lesson.status === 'Locked' && isQuiz(lesson)
+      }"
+      [style.borderLeftColor]="getBorderColor(lesson)"
+      [style.borderTopColor]="selectedLesson === lesson ? getBorderColor(lesson) : 'transparent'"
+      [style.borderRightColor]="selectedLesson === lesson ? getBorderColor(lesson) : 'transparent'"
+      [style.borderBottomColor]="selectedLesson === lesson ? getBorderColor(lesson) : 'transparent'"
+    >
+      <div class="flex gap-3 md:gap-[18px] items-center">
+        <!-- Icon Box -->
+        <div
+          class="w-14 h-14 md:w-[76px] md:h-[75px] rounded-xl flex items-center justify-center shrink-0"
+          [ngClass]="getIconBgClass(lesson)"
+        >
+          <img [src]="getImage(lesson)" class="w-8 h-8 md:w-[42px] md:h-[42px]" [alt]="lesson.title + ' icon'" />
+        </div>
+
+        <!-- Info -->
+        <div class="flex flex-col">
+          <h3
+            class="font-fredoka font-semibold text-lg sm:text-xl md:text-2xl lg:text-[35px] leading-tight"
+            [class.text-purple-700]="isQuiz(lesson)"
+          >
+            {{ lesson.title }}
+          </h3>
+
+          <p
+            class="font-fredoka text-[#374151] text-xs sm:text-sm md:text-[22px] font-medium mt-0.5"
+            *ngIf="!isQuiz(lesson)"
+          >
+            {{ lesson.type }} • {{ lesson.time }}
+          </p>
+          <p
+            class="font-fredoka text-[#374151] text-xs sm:text-sm md:text-[22px] font-medium mt-0.5"
+            *ngIf="isQuiz(lesson)"
+          >
+            {{ lesson.type }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Status Text -->
+      <div
+        *ngIf="lesson.status === 'Locked' && isQuiz(lesson)"
+        class="bg-gray-300 rounded-full px-3 py-1 md:px-4 md:py-2 flex items-center gap-1 md:gap-2"
+      >
+        <img src="assets/icons/lock.png" class="w-4 h-4 md:w-6 md:h-6" alt="locked" />
+        <span
+          class="font-fredoka font-semibold text-sm md:text-[20px] text-red-500"
+        >
+          {{ lesson.status }}
+        </span>
+      </div>
+      <div
+        *ngIf="lesson.status === 'Locked' && !isQuiz(lesson)"
+        class="font-fredoka font-semibold text-sm md:text-[20px] text-red-500"
+      >
+        {{ lesson.status }}
+      </div>
+      <div
+        *ngIf="lesson.status !== 'Locked'"
+        class="font-fredoka font-semibold text-sm md:text-[20px] flex items-center gap-1 text-[#16A34A]"
+        [ngClass]="getStatusColor(lesson)"
+      >
+        {{ lesson.status }}
+      </div>
+    </mat-card>
+  </div>
+</main>

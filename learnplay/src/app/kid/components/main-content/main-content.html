@@ -1,0 +1,98 @@
+<div class="min-h-screen px-6 py-6 md:py-10 md:px-12 lg:px-[150px] !bg-gradient-to-b from-[#F5F5FF] to-[#FBF4FC] animate-fade-in">
+  <!-- Back Button -->
+  <div class="mb-3 md:mb-6">
+    <button 
+      (click)="onBackToSelectLearner()"
+      class="flex items-center gap-2 text-[#9333EA] font-fredoka font-semibold text-[16px] md:text-[18px] lg:text-[20px] leading-tight tracking-[-0.4px] hover:text-[#7C3AED] transition-all duration-300 cursor-pointer group overflow-hidden"
+    >
+      <mat-icon class="text-[18px] md:text-[20px] lg:text-[22px] group-hover:transform group-hover:-translate-x-1 transition-transform duration-200 flex-shrink-0">arrow_back</mat-icon>
+      <span class="whitespace-nowrap transform translate-x-[-100%] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-out">Back to select learner</span>
+    </button>
+  </div>
+
+  <!-- Greeting -->
+  <div class="mb-10 md:mb-16">
+    <div class="flex flex-col gap-2 md:gap-4">
+      <h1
+        class="font-fredoka font-bold text-[#9333EA] text-4xl sm:text-5xl md:text-[65px] leading-tight tracking-[-0.4px]"
+      >
+        Hello, {{ userName }}! 👋
+      </h1>
+
+      <p
+        class="font-fredoka font-normal text-[#374151] text-xl sm:text-2xl md:text-[30px] leading-snug tracking-[-0.4px]"
+      >
+        What do you want to learn today?
+      </p>
+    </div>
+  </div>
+
+  <!-- Subjects Grid -->
+  <div class="w-full">
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-[20px]"
+    >
+      <!-- Loop subjects -->
+      @for (subject of subjects; track subject.id) {
+      <mat-card
+        class="!p-6 md:!p-[30px] !shadow-[0_6px_30px_0_rgba(0,0,0,0.1)] hover:!shadow-xl hover:scale-[1.01] transition-all !bg-[#FFFFFF] !rounded-[23px] !cursor-pointer flex flex-col justify-between min-h-[340px] md:min-h-[366px]"
+        (click)="onSelectSubject(subject)"
+      >
+        <div class="w-full">
+          <!-- Icon -->
+          <div
+            class="w-[70px] h-[70px] md:w-[86px] md:h-[85px] flex items-center justify-center rounded-[12px] shrink-0"
+            [ngClass]="subject.bg"
+          >
+            <img [src]="subject.icon" class="w-10 h-10 md:w-[60px] md:h-[60px]" [alt]="subject.name" />
+          </div>
+          <!-- Title -->
+          <div class="mt-4 md:mt-6">
+            <h2
+              class="font-[Fredoka] font-bold text-3xl md:text-[45px] leading-tight tracking-[-0.4px]"
+              [ngClass]="subject.color"
+            >
+              {{ subject.name }}
+            </h2>
+            <p
+              class="font-[Fredoka] font-normal text-base md:text-[20px] text-[#374151] leading-relaxed mb-1 md:mb-2"
+            >
+              {{ subject.description }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="w-full mt-6">
+          <div class="flex justify-between items-center mb-2">
+            <p
+              class="font-[Fredoka] font-normal text-sm md:text-[18px] text-[#374151]"
+            >
+              Progress
+            </p>
+            <p
+              class="font-[Fredoka] font-semibold text-sm md:text-[18px] text-[#374151]"
+            >
+              {{ subject.progress }}%
+            </p>
+          </div>
+
+          <div class="w-full h-[18px] md:h-[22px] rounded-full overflow-hidden">
+            <app-progress-bar
+              class="w-full h-full"
+              [value]="subject.progress"
+              [barColor]="subject.gradient"
+            ></app-progress-bar>
+          </div>
+        </div>
+
+        <!-- Points -->
+        <div class="flex items-center gap-2 mt-4">
+          <img src="assets/icons/star.png" class="w-5 h-5 md:w-[26px] md:h-[26px]" alt="star" />
+          <span class="font-[Fredoka] font-normal text-sm md:text-[18px] text-[#374151]"> {{ subject.points }} points earned </span>
+        </div>
+      </mat-card>
+      }
+    </div>
+  </div>
+</div>

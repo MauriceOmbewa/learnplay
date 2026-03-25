@@ -1,0 +1,82 @@
+<main class="bg-[linear-gradient(180deg,#F5F5FF_0%,#FBF4FC_100%)] min-h-screen">
+  <div
+    class="pt-[20px] md:pt-[50px] pr-[16px] sm:pr-[50px] md:pr-[50px] xl:pr-[150px] pb-[20px] pl-[16px] sm:pl-[50px] md:pl-[50px] xl:pl-[150px]"
+  >
+    <button
+      (click)="onBack()"
+      class="flex items-center gap-2 text-[#9333EA] font-fredoka font-bold text-[18px] md:text-[25px] leading-[20px] md:leading-[27px] tracking-[-0.4px] mb-4 md:mb-8 cursor-pointer"
+    >
+      ← Back
+    </button>
+
+    <div class="text-center mb-8">
+      <h1
+        class="text-[#374151] font-fredoka font-bold text-[32px] md:text-[50px] leading-[36px] md:leading-[55px] tracking-[-0.4px] mb-2"
+      >
+        Select Learner
+      </h1>
+      <p
+        class="text-[#374151] font-fredoka font-normal text-[16px] md:text-[22px] leading-[20px] md:leading-[30px] tracking-[-0.4px]"
+      >
+        Choose which child to log in
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div
+        *ngFor="let learner of learners"
+        (click)="onSelectLearner(learner)"
+        class="relative overflow-hidden bg-white rounded-[15px] md:rounded-[23px] p-[20px] md:p-[30px] shadow-[0_6px_30px_0_rgba(0,0,0,0.1)] border border-gray-100 cursor-pointer hover:shadow-[0_8px_40px_0_rgba(147,51,234,0.2)] hover:border-[#9333EA] hover:-translate-y-2 transition-all duration-300 ease-in-out"
+      >
+        <!-- SUBSCRIPTION RIBBON -->
+        <div
+          class="absolute bottom-[22px] right-[-42px] w-[160px] py-1 rotate-[-45deg] text-center shadow-lg z-10"
+          [ngClass]="isSubscribed(learner.subscriptionExpiryDate) ? 'bg-green-500' : 'bg-red-500'"
+        >
+          <span
+            class="text-white font-fredoka font-bold text-[11px] md:text-[13px] uppercase tracking-[1px] block w-full"
+          >
+            {{ isSubscribed(learner.subscriptionExpiryDate) ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <div
+            class="rounded-full w-[80px] h-[80px] md:w-[100px] md:h-[100px] flex items-center justify-center mb-4 overflow-hidden"
+            style="background: linear-gradient(134.45deg, #F8C96C 15.3%, #FCA780 81.76%);"
+          >
+            <img [src]="getAvatarPath(learner)" class="w-full h-full object-cover rounded-full" [alt]="learner.firstName + ' avatar'" />
+          </div>
+          <h3
+            class="text-[#374151] font-fredoka font-bold text-[20px] md:text-[30px] leading-[24px] md:leading-[35px] tracking-[-0.4px] mb-2"
+          >
+            {{ getDisplayName(learner) }}
+          </h3>
+          <p
+            class="text-[#9333EA] font-fredoka font-semibold text-[14px] md:text-[18px] leading-[18px] md:leading-[22px] tracking-[-0.4px] mb-1"
+          >
+            {{ learner.gradeName }}
+          </p>
+          <div class="flex items-center gap-2 mt-2">
+            <img
+              src="./assets/icons/star_parent_dashboard.png"
+              class="w-[20px] h-[20px] md:w-[24px] md:h-[24px]"
+            />
+            <span
+              class="text-[#CA8A04] font-fredoka font-bold text-[16px] md:text-[20px] leading-[20px] md:leading-[24px] tracking-[-0.4px]"
+            >
+              {{ learner.points }} points
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="learners.length === 0" class="text-center py-12">
+      <p
+        class="text-[#374151] font-fredoka font-normal text-[18px] md:text-[24px] leading-[22px] md:leading-[30px] tracking-[-0.4px]"
+      >
+        No learners found
+      </p>
+    </div>
+  </div>
+</main>
